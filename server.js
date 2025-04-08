@@ -45,6 +45,7 @@
 
 
 // server.js
+const PORT = process.env.PORT || 5000;
 const express = require('express');
 const cors = require('cors');
 const app = express();
@@ -53,14 +54,16 @@ const pool = require('./db'); // Use our database key
 app.use(express.json());
 app.use(cors()); // Allow frontend to talk to us
 
+
+
 // When frontend asks "Show me jobs", we get from database
 app.get('/api/jobs', async (req, res) => {
   const [jobs] = await pool.query('SELECT * FROM jobs');
   res.json(jobs);
 });
 
-app.listen(5000, () => {
-  console.log('Backend door is open at port 5000! 🚪');
+app.listen(PORT, () => {
+  console.log(`Backend door is open at port ${PORT} 🚪`);
 });
 
 app.get('/', (req, res) => {
